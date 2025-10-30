@@ -116,7 +116,7 @@
         <!-- Header -->
         <header class="py-6 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <!-- Visible logo image provided by user -->
+             
                 <img src="logobd.png" alt="Budget Planner logo" class="h-12 w-auto logo-img">
                 
                 <p class="text-white-700">Track your expenses easily</p>
@@ -143,7 +143,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Add Transaction Form -->
+           
             <div class="bg-white p-6 rounded-xl shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Add Transaction</h2>
                 <form id="transaction-form" class="space-y-4">
@@ -188,7 +188,7 @@
                 </form>
             </div>
 
-            <!-- Transactions List -->
+            
             <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-semibold text-gray-800">Transactions</h2>
@@ -206,7 +206,7 @@
                 
                 <div class="space-y-3 overflow-y-auto max-h-96">
                     <div id="transactions-list">
-                        <!-- Transactions will be listed here dynamically -->
+                       
                         <p class="text-center text-gray-500 py-10">No transactions yet. Add your first transaction!</p>
                     </div>
                 </div>
@@ -220,19 +220,19 @@
                 <div>
                     <h3 class="text-sm font-medium text-gray-500 mb-2">Expense Categories</h3>
                     <div id="expense-categories" class="space-y-2">
-                        <!-- Category stats will be added here -->
+                        
                     </div>
                 </div>
                 <div>
                     <h3 class="text-sm font-medium text-gray-500 mb-2">Recent Transactions</h3>
                     <div id="recent-transactions" class="space-y-3">
-                        <!-- Recent transactions will be added here -->
+                       
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Floating Add Button (Mobile) -->
+     
         <button id="add-btn-mobile" class="fixed bottom-8 right-6 w-14 h-14 rounded-full bg-purple-600 text-white text-2xl flex items-center justify-center shadow-lg floating-btn md:hidden">
             <i class="fas fa-plus"></i>
         </button>
@@ -240,14 +240,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Set today's date as default
+           
             document.getElementById('date').valueAsDate = new Date();
             
-            // Initialize app
+            
             let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
             let currentType = 'expense';
             
-            // DOM Elements
+            
             const typeToggles = document.querySelectorAll('.type-toggle');
             const transactionForm = document.getElementById('transaction-form');
             const transactionsList = document.getElementById('transactions-list');
@@ -255,19 +255,19 @@
             const addBtnMobile = document.getElementById('add-btn-mobile');
             const themeToggleBtn = document.getElementById('theme-toggle');
             
-            // Summary elements
+            
             const incomeAmount = document.getElementById('income-amount');
             const expenseAmount = document.getElementById('expense-amount');
             const balanceAmount = document.getElementById('balance-amount');
             
-            // Stats elements
+           
             const expenseCategories = document.getElementById('expense-categories');
             const recentTransactions = document.getElementById('recent-transactions');
             
-            // Initialize the UI
+         
             updateUI();
             
-            // Type toggle buttons
+            
             typeToggles.forEach(button => {
                 button.addEventListener('click', function() {
                     typeToggles.forEach(btn => {
@@ -278,7 +278,7 @@
                 });
             });
             
-            // Form submit
+           
             transactionForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
@@ -305,52 +305,52 @@
                 saveTransactions();
                 updateUI();
                 
-                // Reset form
+                
                 this.reset();
                 document.getElementById('date').valueAsDate = new Date();
                 
-                // Show success message
+               
                 showNotification('Transaction added successfully!');
             });
             
-            // Filter transactions
+           
             filterType.addEventListener('change', function() {
                 updateUI();
             });
             
-            // Mobile add button (scroll to form)
+            
             addBtnMobile.addEventListener('click', function() {
                 document.getElementById('description').focus();
             });
             
-            // Theme toggle
+          
             themeToggleBtn.addEventListener('click', toggleTheme);
             
-            // Check for saved theme preference
+           
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 document.documentElement.classList.add('dark');
                 themeToggleBtn.innerHTML = '<i class="fas fa-moon text-purple-500"></i>';
             }
             
-            // Generate unique ID
+      
             function generateId() {
                 return Date.now().toString(36) + Math.random().toString(36).substr(2);
             }
             
-            // Save transactions to localStorage
+           
             function saveTransactions() {
                 localStorage.setItem('transactions', JSON.stringify(transactions));
             }
             
-            // Update all UI elements
+            
             function updateUI() {
                 updateTransactionList();
                 updateSummary();
                 updateStats();
             }
             
-            // Update transactions list
+        
             function updateTransactionList() {
                 const filterValue = filterType.value;
                 let filteredTransactions = [...transactions];
@@ -364,7 +364,7 @@
                     return;
                 }
                 
-                // Sort by date (newest first)
+               
                 filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
                 
                 transactionsList.innerHTML = filteredTransactions.map(transaction => `
@@ -390,7 +390,7 @@
                     </div>
                 `).join('');
                 
-                // Add event listeners to delete buttons
+                
                 document.querySelectorAll('.delete-btn').forEach(button => {
                     button.addEventListener('click', function() {
                         const id = this.dataset.id;
@@ -399,7 +399,7 @@
                 });
             }
             
-            // Delete a transaction
+           
             function deleteTransaction(id) {
                 if (confirm('Are you sure you want to delete this transaction?')) {
                     transactions = transactions.filter(t => t.id !== id);
@@ -409,7 +409,7 @@
                 }
             }
             
-            // Update summary (income, expense, balance)
+          
             function updateSummary() {
                 const income = transactions
                     .filter(t => t.type === 'income')
@@ -426,9 +426,9 @@
                 balanceAmount.textContent = `DT ${balance.toFixed(2)}`;
             }
             
-            // Update stats section (categories and recent transactions)
+            
             function updateStats() {
-                // Expense by category
+               
                 const expenseByCategory = transactions
                     .filter(t => t.type === 'expense')
                     .reduce((acc, t) => {
@@ -457,7 +457,7 @@
                         `;
                     }).join('') || '<p class="text-sm text-gray-500">No expense data yet</p>';
                 
-                // Recent transactions (last 5)
+                
                 const sortedByDate = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
                 
                 recentTransactions.innerHTML = sortedByDate
@@ -481,7 +481,7 @@
                     `).join('') || '<p class="text-sm text-gray-500">No recent transactions</p>';
             }
             
-            // Helper functions
+            
             function formatDate(dateString) {
                 const options = { year: 'numeric', month: 'short', day: 'numeric' };
                 return new Date(dateString).toLocaleDateString('en-US', options);
@@ -537,4 +537,5 @@
         });
     </script>
 </body>
+
 </html>
